@@ -1,30 +1,38 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import BFX from 'bitfinex-api-node';
+// import ws from 'ws';
 
-const bfx = new BFX({
-  ws: {
-    autoReconnect: false,
-    seqAudit: true,
-    packetWDDelay: 10 * 1000
-  }
-})
+// const w = new ws('ws://localhost:5000/')
 
-var ws = bfx.ws();
+// w.on('message', (msg) => console.log(msg))
 
-ws.on('error', (err) => console.log(err))
-ws.on('open', () => {
-  ws.onTrade({ pair: 'BTCUSD' }, (trade) => {
-    if (Array.isArray(trade[0])) {
-      console.log(`recv snapshot of ${trade.length} trades`)
-    } else {
-      console.log(`trade: ${JSON.stringify(trade)}`)
-    }
-  })
-})
 
-ws.open()
+
+// w.on('open', () => w.send(msg))
+
+// var socket = new WebSocket('ws://localhost:5000');          // create new WebSocket
+// socket.onmessage = function (msg) {console.log(msg)};       // listen to socket messages
+// socket.send('hello world');                                 // send message
+
+const socket = new WebSocket('ws://localhost:5000');
+
+// Connection opened
+socket.addEventListener('open', function (event) {
+    
+    let msg = JSON.stringify({ 
+      event: 'subscribe', 
+      channel: 'ticker', 
+      symbol: 'tBTCUSD' 
+    })
+    socket.send(msg);
+});
+
+// Listen for messages
+socket.addEventListener('message', function (event) {
+    console.log('Message from server ', event.data);
+});
+
 
 
 class App extends Component {

@@ -5,14 +5,18 @@
   "dependencies": {
     "bitfinex-api-node": "^2.0.0-beta",
     "express": "^4.16.3",
+    "http-proxy-middleware": "^0.18.0",
     "morgan": "^1.9.0",
     "react": "^16.3.2",
     "react-dom": "^16.3.2",
-    "react-scripts": "1.1.4"
+    "react-redux": "^5.0.7",
+    "react-scripts": "1.1.4",
+    "ws": "^5.1.1"
   },
   "proxy": "http://localhost:5000/",
   "scripts": {
     "start": "react-scripts start",
+    "server": "nodemon server/index.js",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
