@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import socketActions from '../actions/socketActions.js';
-import TickerItem from './tickerItem.js';
+import TradeItem from './tradeItem.js';
 
 import { Segment, Item } from 'semantic-ui-react';
 
@@ -35,22 +35,27 @@ class TradeBox extends Component {
   }
 
   render() {
+    var items = this.props.tickers[this.props.selection] || [];
 
     return (
       <Segment className="TradeBox">
       <Item.Group>
         <Item className="TradeBox-Header">
-        {["NAME",
+        {[
         "PRICE",
-        "CHANGE",
-        "HIGH",
-        "LOW"].map(col => {
+        "AMOUNT",
+        "TIME"].map(col => {
           return (
             <div className={`Ticker-item-column`}>{col}</div>
           )
         })}
         </Item>
         {
+            items.map((trade, index) => {
+                return (
+                    <TradeItem details={trade}/>
+                )
+            })
         }
         </Item.Group>
       </Segment>
@@ -62,6 +67,7 @@ function mapStateToProps(state) {
   return {
     tickers: state.tickers,
     listings: state.subscribedMapping,
+    selection: state.selection,
   };
 }
 

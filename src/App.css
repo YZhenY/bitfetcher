@@ -26,3 +26,41 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+.Ticker-item-container {
+  display: flex;
+  font-size: 0.7em;
+  justify-content: space-between;
+  flex-direction: row;
+  height:15px;
+}
+
+.Ticker-item-column {
+  width: 50px;
+}
+
+.TickerBox-Header {
+  display: flex; 
+  font-size: 1em;
+  justify-content: space-between;
+  flex-direction: row;
+}
+
+.Trade-item-container {
+  display: flex;
+  font-size: 0.7em;
+  justify-content: space-between;
+  flex-direction: row;
+  height:15px;
+}
+
+.TradeBox-Header {
+  display: flex; 
+  font-size: 1em;
+  justify-content: space-between;
+  flex-direction: row;
+}
+
+.Trade-item-column {
+  width: 50px;
+}

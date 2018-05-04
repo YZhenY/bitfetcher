@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import socketActions from './actions/socketActions.js';
 import TickerBox from './components/tickerBox.js';
+import TradeBox from './components/tradeBox.js';
 
 import './App.css';
 import 'semantic-ui-css/semantic.min.css';
@@ -42,6 +43,7 @@ class App extends Component {
           <h1 className="App-title">Flipchart magic</h1>
         </header>
         <TickerBox />
+        <TradeBox />
       </div>
     );
   }

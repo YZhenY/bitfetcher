@@ -38,9 +38,19 @@ function subscribedMapping(state = {ticker:{}, trades:{}}, action) {
     }
 }
 
+function selection(state = -1, action) {
+    switch (action.type) {
+        case 'SOCKET_SUBSCRIBED':
+            return action.pairMapping.chanId;
+        default:
+            return state
+    }
+}
+
 const rootReducer = combineReducers({
     tickers,
-    subscribedMapping
+    subscribedMapping,
+    selection
 });
 
 export default rootReducer;

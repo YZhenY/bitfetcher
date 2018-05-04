@@ -32,6 +32,7 @@ const createSocketMiddleware = (
       console.log('sending data', JSON.stringify({ type: 'subscribe', ...data }))
       ws.send(JSON.stringify({ type: 'subscribe', ...data }))
     })
+    next(action);
   } else if (action.type === types.SOCKET_MESSAGE) {
 
     var state = store.getState();
