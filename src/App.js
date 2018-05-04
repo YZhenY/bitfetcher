@@ -1,52 +1,42 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
-// import ws from 'ws';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import socketActions from './actions/socketActions.js';
 
-// const w = new ws('ws://localhost:5000/')
+// const socket = new WebSocket('ws://localhost:5000');
+// // Connection opened
+// socket.addEventListener('open', function (event) { 
+    // let msg = JSON.stringify({ 
+    //   event: 'subscribe', 
+    //   channel: 'ticker', 
+    //   symbol: 'tBTCUSD' 
+    // })
+//     socket.send(msg);
+// });
 
-// w.on('message', (msg) => console.log(msg))
-
-
-
-// w.on('open', () => w.send(msg))
-
-// var socket = new WebSocket('ws://localhost:5000');          // create new WebSocket
-// socket.onmessage = function (msg) {console.log(msg)};       // listen to socket messages
-// socket.send('hello world');                                 // send message
-
-const socket = new WebSocket('ws://localhost:5000');
-
-// Connection opened
-socket.addEventListener('open', function (event) {
-    
-    let msg = JSON.stringify({ 
-      event: 'subscribe', 
-      channel: 'ticker', 
-      symbol: 'tBTCUSD' 
-    })
-    socket.send(msg);
-});
-
-// Listen for messages
-socket.addEventListener('message', function (event) {
-    console.log('Message from server ', event.data);
-});
+// // Listen for messages
+// socket.addEventListener('message', function (event) {
+//     console.log('Message from server ', event.data);
+// });
 
 
 
 class App extends Component {
-  constructor() {
+  constructor(props) {
     super();
 
+  }
+  
+  componentWillMount() { // HERE WE ARE INITALIZING THE SOCKET
+    this.props.socketActions.socketConnect();
   }
 
   render() {
     return (
       <div className="App">
         <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
+          <h1 className="App-title">{this.props.ticker}</h1>
         </header>
         <button onClick={this.handleClick} >Link to socket</button>
         <p className="App-intro">
@@ -57,4 +47,18 @@ class App extends Component {
   }
 }
 
-export default App;
+function mapStateToProps(state) {
+  return {
+    ticker: state.ticker
+  };
+}
+function mapDispatchToProps(dispatch) {
+  return {
+    socketActions: bindActionCreators(socketActions, dispatch)
+  };
+}
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(App);
+
