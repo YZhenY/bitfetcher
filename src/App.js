@@ -8,22 +8,6 @@ import TradeBox from './components/tradeBox.js';
 import './App.css';
 import 'semantic-ui-css/semantic.min.css';
 
-// const socket = new WebSocket('ws://localhost:5000');
-// // Connection opened
-// socket.addEventListener('open', function (event) { 
-    // let msg = JSON.stringify({ 
-    //   event: 'subscribe', 
-    //   channel: 'ticker', 
-    //   symbol: 'tBTCUSD' 
-    // })
-//     socket.send(msg);
-// });
-
-// // Listen for messages
-// socket.addEventListener('message', function (event) {
-//     console.log('Message from server ', event.data);
-// });
-
 
 
 class App extends Component {
@@ -31,16 +15,13 @@ class App extends Component {
     super();
 
   }
-  
-  componentWillMount() { // HERE WE ARE INITALIZING THE SOCKET
-    // this.props.socketActions.socketConnect();
-  }
 
   render() {
     return (
       <div className="App">
         <header className="App-header">
-          <h1 className="App-title">Flipchart magic</h1>
+          <h1 className="App-title">BitFetcher</h1>
+          <h2 className="App-sub-title">Your data in just a bit!</h2>
         </header>
         <TickerBox />
         <TradeBox />
