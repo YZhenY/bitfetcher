@@ -2,6 +2,8 @@ import { bindActionCreators } from 'redux'
 import types from '../actions/actionTypes.js';
 import socketActionCreators from '../actions/socketActions.js'
 
+var ws;
+
 const createSocketMiddleware = (
   socketURL, // the url our socket connects to
   shouldInstantiate, // a predicate function to know when to connect our socket
@@ -9,7 +11,7 @@ const createSocketMiddleware = (
 ) => store => next => action => {
   if (shouldInstantiate(action)) {
     // instantiate the web socket
-    const ws = new window.WebSocket(socketURL)
+    ws = new window.WebSocket(socketURL)
     console.log('Middleware connection called');
     // bind eventHandlers to dispatch
     const boundEventHandlers = bindActionCreators(eventHandlers, store.dispatch)
@@ -24,10 +26,12 @@ const createSocketMiddleware = (
     ws.onclose = boundEventHandlers.onclose
     ws.onerror = boundEventHandlers.onerror
     ws.onmessage = boundEventHandlers.onmessage
-
   
-  // } else if (action.type === types.SOCKET_SEND) {
-  //   ws.send(JSON.stringify({ type: 'subscribe', ...action.subscribeData }));
+  } else if (action.type === types.SOCKET_SEND) {
+    action.subscribeData.map(data => {
+      console.log('sending data', JSON.stringify({ type: 'subscribe', ...data }))
+      ws.send(JSON.stringify({ type: 'subscribe', ...data }))
+    })
   }
   else {
     return next(action)

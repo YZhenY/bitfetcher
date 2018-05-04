@@ -10,11 +10,11 @@ const symbolList = ["btcusd","ltcusd","ltcbtc","ethusd","ethbtc","etcbtc","etcus
 
 var mySubscribeData = [{ 
   event: 'subscribe', 
-  channel: 'ticker', 
+  channel: 'trades', 
   symbol: 'tBTCUSD' 
 },{ 
   event: 'subscribe', 
-  channel: 'ticker', 
+  channel: 'trades', 
   symbol: 'tETHUSD' 
 }]
 
@@ -28,30 +28,18 @@ var mySubscribeData = [{
 //   mySubscribeData.push(subscribeData)
 // })
 
-class TickerBox extends Component {
+class TradeBox extends Component {
   constructor(props) {
     super();
 
-    this.handleClick = this.handleClick.bind(this);
-  }
-  
-  componentWillMount() { // HERE WE ARE INITALIZING THE SOCKET
-    this.props.socketActions.socketConnect({subscribeData:mySubscribeData});
-  }
-
-  handleClick (e, pair) {
-    this.props.socketActions.socketSend({subscribeData: [{
-      event: 'subscribe', 
-      channel: 'trades', 
-      symbol: `t${pair}` 
-    }]})
   }
 
   render() {
+
     return (
-      <Segment className="TickerBox">
+      <Segment className="TradeBox">
       <Item.Group>
-        <Item className="TickerBox-Header">
+        <Item className="TradeBox-Header">
         {["NAME",
         "PRICE",
         "CHANGE",
@@ -63,13 +51,6 @@ class TickerBox extends Component {
         })}
         </Item>
         {
-          Object.keys(this.props.listings.ticker).map( (item, index) => {
-            if (this.props.tickers[item] && this.props.listings.ticker[item]) {
-              return (
-                <TickerItem  clickHandler={this.handleClick} key={index} pair={this.props.listings.ticker[item]} details={this.props.tickers[item]}/>
-              )
-            }
-          })
         }
         </Item.Group>
       </Segment>
@@ -92,5 +73,5 @@ function mapDispatchToProps(dispatch) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(TickerBox);
+)(TradeBox);
 

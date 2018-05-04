@@ -7,7 +7,7 @@ function tickers(state = {}, action) {
         // console.log('Message reducer called')
         var newState = {...state};
         if (action.payload[1] !== "hb") {
-            newState[action.payload[0]] = action.payload[1];
+            newState[action.payload[0]] = action.payload;
         }
         return newState;
       default:
@@ -15,7 +15,7 @@ function tickers(state = {}, action) {
     }
   }
 
-function subscribedMapping(state = {ticker:{}}, action) {
+function subscribedMapping(state = {ticker:{}, trades:{}}, action) {
     switch (action.type) {
         case 'SOCKET_SUBSCRIBED':
             // console.log('Subscribed mapping is called')
