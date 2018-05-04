@@ -18,16 +18,6 @@ var mySubscribeData = [{
   symbol: 'tETHUSD' 
 }]
 
-// var mySubscribeData = [];
-// symbolList.map(symbol => {
-//   var subscribeData = {
-//     event: 'subscribe', 
-//     channel: 'ticker', 
-//     symbol: `t${symbol.toUpperCase()}` 
-//   }
-//   mySubscribeData.push(subscribeData)
-// })
-
 class TickerBox extends Component {
   constructor(props) {
     super();
