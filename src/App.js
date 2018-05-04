@@ -29,14 +29,14 @@ class App extends Component {
   }
   
   componentWillMount() { // HERE WE ARE INITALIZING THE SOCKET
-    this.props.socketActions.socketConnect();
+    // this.props.socketActions.socketConnect();
   }
 
   render() {
     return (
       <div className="App">
         <header className="App-header">
-          <h1 className="App-title">{this.props.ticker}</h1>
+          <h1 className="App-title">{JSON.stringify(this.props.ticker)}</h1>
         </header>
         <button onClick={this.handleClick} >Link to socket</button>
         <p className="App-intro">
@@ -49,7 +49,7 @@ class App extends Component {
 
 function mapStateToProps(state) {
   return {
-    ticker: state.ticker
+    ticker: state.tickers
   };
 }
 function mapDispatchToProps(dispatch) {

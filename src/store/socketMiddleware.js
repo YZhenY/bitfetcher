@@ -11,6 +11,7 @@ const createSocketMiddleware = (
   if (shouldInstantiate(action)) {
     // instantiate the web socket
     const ws = new window.WebSocket(socketURL)
+    console.log('Middleware connection called');
     // bind eventHandlers to dispatch
     const boundEventHandlers = bindActionCreators(eventHandlers, store.dispatch)
     // fire onopen event, and fire off a subscribe message with our handshake data
