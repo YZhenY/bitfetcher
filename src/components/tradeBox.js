@@ -36,7 +36,9 @@ class TradeBox extends Component {
 
   render() {
     var items = this.props.tickers[this.props.selection] || [];
-
+    if (!Array.isArray(items)) {
+        items = [];
+    }
     return (
       <Segment className="TradeBox">
       <Item.Group>

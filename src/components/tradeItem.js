@@ -1,19 +1,11 @@
 import React, { Component } from 'react';
 import { Segment, Item } from 'semantic-ui-react';
 
-// [
-//     ID,
-//     MTS,
-//     AMOUNT,
-//     PRICE
-//   ],
-
 class TradeItem extends Component {
     constructor(props) {
         super();
 
     }
-
 
   render() {
     return (

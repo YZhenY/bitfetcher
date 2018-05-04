@@ -18,8 +18,6 @@ function tickers(state = {}, action) {
 function subscribedMapping(state = {ticker:{}, trades:{}}, action) {
     switch (action.type) {
         case 'SOCKET_SUBSCRIBED':
-            // console.log('Subscribed mapping is called')
-            // {"event":"subscribed","channel":"ticker","chanId":135,"symbol":"tBTCUSD","pair":"BTCUSD"}
             //check for and delete old mappings
             Object.keys(state[action.pairMapping.channel]).map(chanId => {
                 if (state[action.pairMapping.channel].chanId === action.pairMapping.pair) {
@@ -33,6 +31,8 @@ function subscribedMapping(state = {ticker:{}, trades:{}}, action) {
             var newState = {...state};
             newState[action.pairMapping.channel] = newStateChannel;
             return newState;
+        case 'SOCKET_CLOSE':
+            return {ticker:{}, trades:{}}
         default:
             return state
     }

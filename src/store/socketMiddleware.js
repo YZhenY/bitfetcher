@@ -34,11 +34,10 @@ const createSocketMiddleware = (
     })
     next(action);
   } else if (action.type === types.SOCKET_MESSAGE) {
-
+    //formats messages based on previous state
     var state = store.getState();
     var isTrades = false;
     Object.keys(state.subscribedMapping.trades).map(chanId => {
-      
       if (chanId == action.payload[0]) {
         isTrades = true;
       }
@@ -49,6 +48,28 @@ const createSocketMiddleware = (
       action.payload[1].pop();
     }
     next(action);
+  } else if (action.type === types.SOCKET_CLOSE) {
+    // cater for disconnects
+    var currentSubscriptions = [];
+    var state = store.getState();
+    Object.keys(state.subscribedMapping).map(key => {
+      Object.keys(state.subscribedMapping[key]).map(chanId => {
+        currentSubscriptions.push({
+          event:"subscribe",
+          channel:key,
+          symbol: `t${state.subscribedMapping[key][chanId]}`,
+        })
+      }) 
+    })
+    // bind eventHandlers to dispatch
+    const boundEventHandlers = bindActionCreators(eventHandlers, store.dispatch)
+
+    console.log('New Connection called with ', currentSubscriptions);
+    action.connectCB = boundEventHandlers.connect({subscribeData:currentSubscriptions});
+    next(action)
+  } else if (action.type === types.BUTTON_CLOSE) {
+    console.log('WS Closed Clicked');
+    ws.close();
   }
   else {
     return next(action)
@@ -61,7 +82,8 @@ const myEventHandlers = {
   onopen: socketActionCreators.socketOpen,
   onclose: socketActionCreators.socketClose,
   onerror: socketActionCreators.socketError,
-  onmessage: socketActionCreators.socketMessage
+  onmessage: socketActionCreators.socketMessage,
+  connect: socketActionCreators.socketConnect
 }
 
 const socketMiddleware = createSocketMiddleware(

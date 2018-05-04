@@ -3,8 +3,6 @@ import rootReducer from '../reducers/rootReducer';
 // import thunk from 'redux-thunk';
 import socketMiddleware from './socketMiddleware.js';
 
-
-
 export default function configureStore() {
   return createStore(
     rootReducer,
