@@ -6,7 +6,7 @@ const actionCreators = {
     socketClose: e => ({ type: types.SOCKET_CLOSE }),
     socketError: err => ({ type: types.SOCKET_ERROR, payload: err }),
     socketMessage: e => {
-        console.log(`Action creator called on message ${e.data}`);
+        // console.log(`Action creator called on message ${e.data}`);
         var parsedData = JSON.parse(e.data);
        if (parsedData.event === "subscribed" ) {
             return ({ type: types.SOCKET_SUBSCRIBED, 
@@ -17,7 +17,7 @@ const actionCreators = {
        }
     },
     socketConnect: e => {
-        console.log('Connecting to socket');
+        // console.log('Connecting to socket');
         return ({ type: types.SOCKET_CONNECT, 
             subscribeData: e.subscribeData,
          })
