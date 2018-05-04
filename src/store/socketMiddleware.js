@@ -32,6 +32,22 @@ const createSocketMiddleware = (
       console.log('sending data', JSON.stringify({ type: 'subscribe', ...data }))
       ws.send(JSON.stringify({ type: 'subscribe', ...data }))
     })
+  } else if (action.type === types.SOCKET_MESSAGE) {
+
+    var state = store.getState();
+    var isTrades = false;
+    Object.keys(state.subscribedMapping.trades).map(chanId => {
+      
+      if (chanId == action.payload[0]) {
+        isTrades = true;
+      }
+    })
+
+    if (isTrades && (action.payload[1] ===  "te" || action.payload[1] === "tu")) {
+      action.payload[1] = [action.payload[2]].concat(state.tickers[action.payload[0]]);
+      action.payload[1].pop();
+    }
+    next(action);
   }
   else {
     return next(action)

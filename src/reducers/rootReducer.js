@@ -7,7 +7,7 @@ function tickers(state = {}, action) {
         // console.log('Message reducer called')
         var newState = {...state};
         if (action.payload[1] !== "hb") {
-            newState[action.payload[0]] = action.payload;
+            newState[action.payload[0]] = action.payload[1];
         }
         return newState;
       default:
